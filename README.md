@@ -19,6 +19,17 @@ rake crier:create_tables # not working yet
 
 ## Usage
 
+### Notification Attributes
+
+* crier: Who did the crying
+* subject: What they were crying about
+* action: What action was being carried out
+* scope: A way to group notifications for easy querying
+* audience: An optional list of users who can see the notification
+* metadata: A hash of metadata to go along with the notification (automatically includes :crier, :subject, :action)
+
+### Examples
+
 ```ruby
 class User < ActiveRecord::Base
    acts_as_crier
@@ -26,13 +37,16 @@ end
 ```
 
 ```ruby
-someuser.cry("Hello, my name is.")                            # Shout about yourself
-someuser.cry("The roof is on fire!", :subject => @house)      # Shout about the house
-someuser.cry("Bring out yer dead", :scope => :my_town)        # Shout within a custom scope for finding
-someuser.cry("Lend me your ears", :audience => @other_users)  # Shout only to specific users
-someuser.cry("Lend me your ears").at(@other_users)            # Shout only to specific users, alternate syntax, non-transactional
-someuser.cry("This is why I'm fly!", :reasons => @reasons)    # Shout with custom metadata
+# cry(message, metadata, audience)
 
-Crier::Notification.heard_by(some_user)                       # Get all the notifications the user heard
-Crier::Notification.scope(:my_town)                           # Get all the notifications within the given scope
+someuser.cry("Hello, my name is.")                                # Shout about yourself
+someuser.cry("The roof is on fire!", :subject => @house)          # Shout about the house
+someuser.cry("Bring out yer dead", :scope => :my_town)            # Shout within a custom scope for finding
+someuser.cry("Reticulating Splines", :action => :reticulated)     # Shout with a specific action verb for use in the view
+someuser.cry("Lend me your ears", {}, :audience => @other_users)  # Shout only to specific users
+someuser.cry("Lend me your ears").at(@other_users)                # Shout only to specific users, alternate syntax, non-transactional
+someuser.cry("This is why I'm fly!", :reasons => @reasons)        # Shout with custom metadata
+
+Crier::Notification.heard_by(some_user)                           # Get all the notifications the user heard
+Crier::Notification.scope(:my_town)                               # Get all the notifications within the given scope
 ```
