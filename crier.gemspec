@@ -12,7 +12,7 @@ Gem::Specification.new do |s|
   s.summary     = "Simple notification for the whole town"
   s.description = "Simple notification for the whole town"
 
-  s.files = Dir["{app,config,db,lib}/**/*"] + ["Rakefile", "README.md"]
+  s.files = Dir["{app,config,db,lib}/**/*"] + ["README.md"]
   s.test_files = Dir["test/**/*"]
 
   s.add_dependency "rails", "~> 3.1"
