@@ -19,6 +19,12 @@ rake crier:create_tables # not working yet
 
 ## Usage
 
+```ruby
+class User < ActiveRecord::Base
+   acts_as_crier
+end
+```
+
 ### Notification Attributes
 
 * crier: Who did the crying
@@ -28,13 +34,7 @@ rake crier:create_tables # not working yet
 * audience: An optional list of users who can see the notification
 * metadata: A hash of metadata to go along with the notification (automatically includes :crier, :subject, :action)
 
-### Examples
-
-```ruby
-class User < ActiveRecord::Base
-   acts_as_crier
-end
-```
+### Public Crying
 
 ```ruby
 # cry(message, metadata, audience)
@@ -43,10 +43,22 @@ someuser.cry("Hello, my name is.")                                # Shout about 
 someuser.cry("The roof is on fire!", :subject => @house)          # Shout about the house
 someuser.cry("Bring out yer dead", :scope => :my_town)            # Shout within a custom scope for finding
 someuser.cry("Reticulating Splines", :action => :reticulated)     # Shout with a specific action verb for use in the view
-someuser.cry("Lend me your ears", {}, :audience => @other_users)  # Shout only to specific users
-someuser.cry("Lend me your ears").at(@other_users)                # Shout only to specific users, alternate syntax, non-transactional
 someuser.cry("This is why I'm hot!", :reasons => @reasons)        # Shout with custom metadata
+```
 
+### Private Crying
+
+Cries are public unless they have an audience.
+
+```ruby
+someuser.cry("Lend me your ears", {}, @other_users)               # Shout only to specific users
+someuser.cry("Lend me your ears").to(@other_users)                # Shout only to specific users, alternate syntax, non-transactional
+someuser.cry("Lend me your ears").to_others(@other_users)         # Shout only to specific users, alternate syntax, non-transactional, excludes crier from @other_users
+```
+
+### Listening
+
+```ruby
 Crier::Notification.heard_by(some_user)                           # Get all the notifications the user heard
 Crier::Notification.scope(:my_town)                               # Get all the notifications within the given scope
 ```

@@ -16,6 +16,7 @@ module Crier
         n.metadata  = metadata.reverse_merge(:crier => self, :subject => self)
         n.audience  = Array(audience)
         n.scope     = Crier::HelperMethods.scope_for(n.subject)
+        n.private   = true if audience
       end
     end
   end

@@ -6,6 +6,7 @@ namespace :crier do
       t.string :scope
       t.text :message
       t.text :metadata
+      t.boolean :private, :null => false, :default => false
       t.timestamps
     end
 
