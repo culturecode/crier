@@ -16,7 +16,7 @@ module Crier
     end
 
     def to_others(audience)
-      to(audience - [crier])
+      to(Array(audience) - [crier])
     end
   end
 end
