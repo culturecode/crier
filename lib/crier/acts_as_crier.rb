@@ -1,6 +1,9 @@
 module Crier
   module ActMethod
     def acts_as_crier(options = {})
+      has_many :listenings, :class_name => 'Crier::Listening', :dependent => :delete_all
+      has_many :private_notifications, :class_name => 'Crier::Notification', :source => :notification, :through => :listenings
+
       extend Crier::ClassMethods
       include Crier::InstanceMethods
     end      
