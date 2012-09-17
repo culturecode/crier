@@ -16,7 +16,10 @@ module Crier
     def cry(message, metadata = {}, audience = nil)
       Notification.create! do |n|
         n.message   = message
-        n.metadata  = metadata.reverse_merge(:crier => self, :subject => self)
+        n.crier     = metadata.delete(:crier) || self
+        n.subject   = metadata.delete(:subject) || self
+        n.action    = metadata.delete(:action)
+        n.metadata  = metadata
         n.audience  = Array(audience)
         n.scope     = Crier::HelperMethods.scope_for(n.subject)
         n.private   = true if audience

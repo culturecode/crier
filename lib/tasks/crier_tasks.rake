@@ -5,7 +5,16 @@ namespace :crier do
     ActiveRecord::Migration.create_table Crier::Notification.table_name, :force => true do |t|
       t.string :scope
       t.text :message
+
+      t.integer :crier_id
+
+      t.string :subject_type
+      t.integer :subject_id
+
+      t.string :action
+
       t.text :metadata
+
       t.boolean :private, :null => false, :default => false
       t.timestamps
     end
