@@ -1,4 +1,4 @@
-# Load the crier fiels
+# Load the crier files
 require 'crier/acts_as_crier'
 require 'crier/listening'
 require 'crier/notification'

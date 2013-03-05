@@ -60,5 +60,6 @@ someuser.cry("Lend me your ears").to_others(@other_users)         # Shout only t
 
 ```ruby
 Crier::Notification.heard_by(some_user)                           # Get all the notifications the user heard
-Crier::Notification.scope(:my_town)                               # Get all the notifications within the given scope
+Crier::Notification.about(@record)                                # Get all the notifications with the given subject
+Crier::Notification.in_scope(:my_town)                            # Get all the notifications within the given scope
 ```
