@@ -6,7 +6,7 @@ module Crier
 
       extend Crier::ClassMethods
       include Crier::InstanceMethods
-    end      
+    end
   end
 
   module ClassMethods
@@ -14,14 +14,15 @@ module Crier
 
   module InstanceMethods
     def cry(message, metadata = {}, audience = nil)
+      metadata.symbolize_keys!
       Notification.create! do |n|
         n.message   = message
         n.crier     = metadata.delete(:crier) || self
         n.subject   = metadata.delete(:subject) || self
         n.action    = metadata.delete(:action)
+        n.scope     = metadata.delete(:scope) || Crier::HelperMethods.scope_for(n.subject)
         n.metadata  = metadata
         n.audience  = Array(audience)
-        n.scope     = Crier::HelperMethods.scope_for(n.subject)
         n.private   = true if audience
       end
     end
