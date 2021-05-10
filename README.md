@@ -64,3 +64,19 @@ Crier::Notification.heard_by(some_user)                           # Get all the 
 Crier::Notification.about(@record)                                # Get all the notifications with the given subject
 Crier::Notification.in_scope(:my_town)                            # Get all the notifications within the given scope
 ```
+
+## Testing
+
+Define Rails versions you'd like to test in the `Appraisals` file and then run `bundle exec appraisal install`
+
+Run tests against all your Rails versions:
+
+```bash
+bundle exec appraisal rake spec
+```
+
+Or just run specific versions:
+
+```bash
+bundle exec appraisal rails-5 rake
+```

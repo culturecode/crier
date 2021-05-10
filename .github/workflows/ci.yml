@@ -1,4 +1,4 @@
-name: Ruby
+name: CI
 
 on:
   push:
@@ -8,12 +8,12 @@ on:
 
 jobs:
   test:
-
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
-        ruby-version: ['2.5', '2.7', '3.0']
-
+        ruby-version: ['2.5']
+        appraisal-version: ['rails-4', 'rails-5', 'rails-6']
     steps:
     - uses: actions/checkout@v2
 
@@ -21,7 +21,14 @@ jobs:
       uses: ruby/setup-ruby@v1
       with:
         ruby-version: ${{ matrix.ruby-version }}
+        bundler: 1
         bundler-cache: true # runs 'bundle install' and caches installed gems automatically
 
-    - name: Run tests
-      run: bundle exec rspec
+    - name: Setup appraisal
+      run: |
+        bundle exec appraisal install
+
+    - name: Run all tests
+      env:
+        RAILS_ENV: test
+      run: bundle exec appraisal ${{ matrix.appraisal-version }} rake spec
