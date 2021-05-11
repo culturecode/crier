@@ -16,7 +16,7 @@ module Crier
 
     scope :by,       lambda {|user| where(:crier_id => user) }
     scope :heard_by, lambda {|user| joins("LEFT OUTER JOIN #{Listening.table_name} ON #{Listening.table_name}.notification_id = #{table_name}.id").where("#{Listening.table_name}.user_id = #{user.id} OR NOT private")}
-    scope :about,    lambda {|subject| where(:subject_id => subject.id, :subject_type => subject.class) }
+    scope :about,    lambda {|subject| where(:subject_id => subject.id, :subject_type => subject.class.name) }
     scope :in_scope, lambda {|scope| where(:scope => scope) }
 
     # Shortcut for creating a private audience for this notification

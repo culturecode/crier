@@ -29,4 +29,12 @@ describe Crier::Notification do
       expect(notification.audience).to match_array([other_user])
     end
   end
+
+  describe "about" do
+    let(:subject) { Subject.create!(title: "Subject") }
+    it "returns notifications" do
+      notification = Crier::Notification.create!(subject: subject)
+      expect(Crier::Notification.about(subject)).to match_array([notification])
+    end
+  end
 end
