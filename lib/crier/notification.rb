@@ -2,7 +2,11 @@ module Crier
   class Notification < ActiveRecord::Base
     self.table_name = 'crier_notifications'
 
-    belongs_to :crier, :class_name => 'User'
+    if ActiveRecord::VERSION::MAJOR <= 4
+      belongs_to :crier, :class_name => 'User'
+    else
+      belongs_to :crier, :class_name => 'User', :optional => true
+    end
     belongs_to :subject, :polymorphic => true
 
     has_many :listenings, :dependent => :delete_all

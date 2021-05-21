@@ -14,6 +14,10 @@ ActiveRecord::Schema.define(:version => 0) do
     t.string :last_name
   end
 
+  create_table :subjects, :force => true do |t|
+    t.string :title
+  end
+
   create_table Crier::Notification.table_name, :force => true do |t|
       t.string :scope
       t.text :message
@@ -25,9 +29,17 @@ ActiveRecord::Schema.define(:version => 0) do
       t.boolean :private, :null => false, :default => false
       t.timestamps
     end
+
+  create_table Crier::Listening.table_name, :force => true do |t|
+    t.belongs_to :notification
+    t.belongs_to :user
+  end
 end
 
 
 class User < ActiveRecord::Base
    acts_as_crier
+end
+
+class Subject < ActiveRecord::Base
 end

@@ -16,3 +16,4 @@ rerun.txt
 pickle-email-*.html
 *.gem
 Gemfile.lock
+*.gemfile.lock
