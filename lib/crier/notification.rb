@@ -19,6 +19,8 @@ module Crier
     scope :about,    lambda {|subject| where(:subject_id => subject.id, :subject_type => subject.class.name) }
     scope :in_scope, lambda {|scope| where(:scope => scope) }
 
+    before_save :set_privacy
+
     # Shortcut for creating a private audience for this notification
     def to(audience)
       self.update_column(:private, true)
@@ -29,6 +31,12 @@ module Crier
 
     def to_others(audience)
       to(Array(audience) - [crier])
+    end
+
+    private
+
+    def set_privacy
+      self.private = audience.present? unless private_changed?
     end
   end
 end
