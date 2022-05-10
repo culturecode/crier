@@ -67,16 +67,10 @@ Crier::Notification.in_scope(:my_town)                            # Get all the 
 
 ## Testing
 
-Define Rails versions you'd like to test in the `Appraisals` file and then run `bundle exec appraisal install`
-
-Run tests against all your Rails versions:
+There are multiple gemfiles available for testing against different Rails versions.  Set `BUNDLE_GEMFILE` to target them, e.g.
 
 ```bash
-bundle exec appraisal rake spec
-```
-
-Or just run specific versions:
-
-```bash
-bundle exec appraisal rails-5 rake
+bundle install
+BUNDLE_GEMFILE=gemfiles/rails_7.gemfile bundle install
+BUNDLE_GEMFILE=gemfiles/rails_7.gemfile bundle exec rspec
 ```
